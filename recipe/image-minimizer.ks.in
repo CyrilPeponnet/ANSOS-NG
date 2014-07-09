@@ -1,0 +1,20 @@
+%post --nochroot --interpreter image-minimizer
+%include common-minimizer.ks
+%include @DISTRO@-minimizer.ks
+%end
+
+%post
+echo "Removing python source files"
+find /usr -name '*.py' -exec rm -f {} \;
+find /usr -name '*.pyo' -exec rm -f {} \;
+
+# remove rarely used documentation files
+(cd /usr/share/doc; \
+ if find . -maxdepth 1 -mmin -60 >/dev/null; then \
+     find . -iname changelog* -exec rm -f {} \; ;\
+     find . -iname changes -exec rm -f {} \; ;\
+     find . -iname news -exec rm -f {} \; ;\
+     sync; \
+ fi)
+
+%end

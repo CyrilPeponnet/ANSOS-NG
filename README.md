@@ -1,0 +1,1 @@
+# Requires: sudo livecd-creator, sudo setenforce, ksflatten
