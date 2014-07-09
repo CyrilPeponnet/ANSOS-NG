@@ -1,17 +1,17 @@
 
 What it does
 ------------
-A docker container is used to build oVirt Node.
+A docker container is used to build ANSOS Node.
 
 Why this makes sense
 --------------------
-oVirt Node for $DIST needs to be build on a host with $DIST. Otherwise you
+ANSOS Node for $DIST needs to be build on a host with $DIST. Otherwise you
 will rnu into weird problems related to e.g. SELinux.
 
 How to start
 ------------
 
-This has been tested on Fedora 19 and 20.
+This has been tested on Fedora 20 and centos 6.
 
 Install docker
 
@@ -22,7 +22,7 @@ Start docker (and check that it's running)
     $ sudo service docker start
     $ sudo service docker status
 
-Build oVirt Node in docker
+Build ANSOS Node in docker
 --------------------------
 
     $ sudo docker build - < Dockerfile-f20

@@ -26,7 +26,7 @@ DISTRO            = @DISTRO@
 BUILD_TYPE        ?= STABLE
 CENTOS            = @CENTOS@
 ARCH              = $(shell rpm --eval '%{_arch}')
-NODE_CREATOR      = $(shell test -e ansos-creator && echo "./ansos-creator" || echo "/usr/sbin/ansos-creator")
+ANSOS_CREATOR      = $(shell test -e ansos-creator && echo "./ansos-creator" || echo "/usr/sbin/ansos-creator")
 
 
 FEDORA_MIRROR     = http://mirrors.fedoraproject.org/mirrorlist

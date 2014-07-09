@@ -1,10 +1,10 @@
 FROM fedora:20
-VOLUME ["/ovirt"]
+VOLUME ["/ansos"]
 RUN yum -y install install livecd-tools appliance-tools-minimizer
 RUN yum -y install fedora-packager python-devel rpm-build createrepo
 RUN yum -y install selinux-policy-doc checkpolicy selinux-policy-devel
 RUN yum -y install autoconf automake python-mock python-lockfile
 
-ADD ./buildovirt.sh /buildovirt.sh
-ENTRYPOINT ["./buildovirt.sh"]
+ADD ./buildansos.sh /buildansos.sh
+ENTRYPOINT ["./buildansos.sh"]
 CMD ["master"]

@@ -18,12 +18,12 @@
 # MA  02110-1301, USA.  A copy of the GNU General Public License is
 # also available at http://www.gnu.org/copyleft/gpl.html.
 
-cd /archipel
+cd /ansos
 git clone http://github.com/ArchipelProject/Archipel.git
 git clone http://github.com/CyrilPeponnet/ANSOS-NG.git
 
-ANSOS_CACHE_DIR=/ANSOS/ANSOS-cache
-ANSOS_LOCAL_REPO=file://${ANSOS_CACHE_DIR}/ANSOS
+ANSOS_CACHE_DIR=/ansos/
+ANSOS_LOCAL_REPO=file://${ANSOS_CACHE_DIR}/Archipel/ArchipelAgent/Archipel_RPMS/RPMS
 export ANSOS_CACHE_DIR
 export ANSOS_LOCAL_REPO
 
@@ -39,11 +39,11 @@ fi
 # Create the repo
 cd 'Archipel_RPMS/RPMS' && createrepo .
 
-cd /archipel/ANSOS-NG/
+cd /ansos/ANSOS-NG/recipe
 # Create the iso
 make distclean
+aclocal
 automake --add-missing
 autoconf
 ./configure --with-image-minimizer 
-cd recipe
 make archipel-node-image.iso

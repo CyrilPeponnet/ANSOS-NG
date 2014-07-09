@@ -56,10 +56,6 @@ AM_CONDITIONAL(TARGET_RHEL, test x"$RHEL" != x && test x"$CENTOS" == x)
 AM_CONDITIONAL(TARGET_CENTOS, test x"$CENTOS" != x)
 AM_CONDITIONAL(TARGET_EL6, test x"$RHEL" != x || test x"$CENTOS" != x)
 
-AM_COND_IF([TARGET_RDLIVECHECK],
-    [BOOTLOADER_ARGS="rd.live.check rd.lvm=0"], [BOOTLOADER_ARGS="check RD_NO_LVM"])
-AC_SUBST([BOOTLOADER_ARGS])
-
 AC_ARG_WITH([image-minimizer], [AC_HELP_STRING([--with-image-minimizer],
             [enable aggresive reduction of the image size])],
             [IMAGE_MINIMIZER="%include image-minimizer.ks"],
@@ -69,13 +65,12 @@ AC_SUBST([IMAGE_MINIMIZER])
 
 PACKAGE_NAME=archipel-node-image
 PRODUCT_NAME=Archipel\ Node\ Hypervisor\ $DISTRO
-MAIN_KS=recipe/archipel-node-image.ks
+MAIN_KS=archipel-node-image.ks
 
 AM_PATH_PYTHON
 
-AC_CONFIG_FILES([Makefile
-                recipe/Makefile
+AC_CONFIG_FILES([
+                Makefile
                 $MAIN_KS
-                recipe/archipel-install.ks
-                recipe/image-minimizer.ks])
+                image-minimizer.ks])
 AC_OUTPUT
