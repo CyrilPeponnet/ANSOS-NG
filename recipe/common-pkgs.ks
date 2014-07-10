@@ -2,6 +2,8 @@ audit
 grubby
 dmraid
 bc
+samba-client
+cifs-utils
 cracklib-python
 ethtool
 kernel

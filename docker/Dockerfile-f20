@@ -3,8 +3,9 @@ VOLUME ["/ansos"]
 RUN yum -y install install livecd-tools appliance-tools-minimizer
 RUN yum -y install fedora-packager python-devel rpm-build createrepo
 RUN yum -y install selinux-policy-doc checkpolicy selinux-policy-devel
-RUN yum -y install autoconf automake python-mock python-lockfile
+RUN yum -y install autoconf automake python-mock python-lockfile openssl-devel
+RUN yum -y groupinstall "Development Tools"
 
-ADD ./buildansos.sh /buildansos.sh
-ENTRYPOINT ["./buildansos.sh"]
+ADD ./buildansos.py /buildansos.py
+ENTRYPOINT ["./buildansos.py"]
 CMD ["master"]

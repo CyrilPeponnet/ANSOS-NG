@@ -46,9 +46,28 @@ ksflatten --config "$RECIPE" --output "$ANSOS_KS.tmp"
 # XXX broken ksflatten leaves %include
 sed -i 's/^%include /#&/' "$ANSOS_KS.tmp"
 
+# adding our local repo
 if [ -n "$ANSOS_LOCAL_REPO" ]; then
     echo "repo --name=local --baseurl=$ANSOS_LOCAL_REPO" >> "$ANSOS_KS"
 fi
+
+# parsing our local repo and append package to archipel-pkgs.ks
+find $ANSOS_LOCAL_REPO -iname *.rpm -exec rpm -qp --qf "%{NAME}\n" {} \; >> "$ANSOS_KS"
+
+# adding any extra repo
+if [ -n "$ANSOS_EXTRA_REPO" ]; then
+  for repo in $ANSOS_EXTRA_REPO; do
+    echo "repo --name=local --baseurl=$repo" >> "$ANSOS_KS"
+  done
+fi
+
+# adding any extra packages
+if [ -n "$ANSOS_EXTRA_PKGS" ]; then
+  for pkg in $ANSOS_EXTRA_PKGS; do
+    echo "pkg" >> "$ANSOS_KS"
+  done
+fi
+
 cat "$ANSOS_KS.tmp" >> "$ANSOS_KS"
 rm -f "$ANSOS_KS.tmp"
 
