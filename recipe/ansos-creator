@@ -52,7 +52,7 @@ if [ -n "$ANSOS_LOCAL_REPO" ]; then
 fi
 
 # parsing our local repo and append package to archipel-pkgs.ks
-find $ANSOS_LOCAL_REPO -iname *.rpm -exec rpm -qp --qf "%{NAME}\n" {} \; >> "$ANSOS_KS"
+find ${ANSOS_LOCAL_REPO#*file://} -iname *.rpm -exec rpm -qp --qf "%{NAME}\n" {} \; >> "$ANSOS_KS"
 
 # adding any extra repo
 if [ -n "$ANSOS_EXTRA_REPO" ]; then
