@@ -152,7 +152,10 @@ if __name__ == "__main__":
         success("Environment variables set")
 
         os.chdir(CACHE_PATH)
-        if options.clean or not os.path.exists(os.path.join(REPO_PATH, "repodata")) :
+        if options.clean or not os.path.exists(os.path.join(REPO_PATH, "RPMS/repodata")) :
+            rpm_topdir = commands.getoutput("rpm --eval %_topdir")
+            os.system("mkdir -p %s/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}" % rpm_topdir)
+            os.system("find %s -iname *.rpm -delete" % rpm_topdir)
             # Building Archipel
             clone_repo(options.with_archipel)
             msg("Create Archipel RPMS")
@@ -162,8 +165,7 @@ if __name__ == "__main__":
             # Building OVS if needed
             if options.with_ovs:
                 msg("Create OpenVswitch RPMS")
-                rpm_topdir = commands.getoutput("rpm --eval %_topdir")
-                os.system("mkdir -p %s/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}" % rpm_topdir)
+                
                 os.system("cd %s && wget http://openvswitch.org/releases/openvswitch-%s.tar.gz && tar xzf openvswitch-%s.tar.gz" % (CACHE_PATH, options.with_ovs, options.with_ovs))
                 os.system("cp %s/openvswitch-%s.tar.gz %s/SOURCES" % (CACHE_PATH, options.with_ovs, rpm_topdir, ))
                 os.system("cp %s/openvswitch-%s/rhel/openvswitch-kmod.files %s/SOURCES" % (CACHE_PATH, options.with_ovs, rpm_topdir, ))
