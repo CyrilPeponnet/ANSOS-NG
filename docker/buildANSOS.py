@@ -145,7 +145,6 @@ if __name__ == "__main__":
         msg("Setting environment variables")
         os.environ['ANSOS_CACHE_DIR'] = CACHE_PATH
         os.environ['ANSOS_LOCAL_REPO'] = "file://%s/RPMS" % REPO_PATH
-        os.environ['EXTRA_RELEASE'] = ".archipel"
         if options.extra_repos:
             os.environ['ANSOS_EXTRA_REPO'] = " ".join(options.extra_repos)
         if options.extra_packages:
@@ -183,16 +182,13 @@ if __name__ == "__main__":
             os.system("cp %s/RPMS/x86_64/* %s/RPMS/x86_64/" % (rpm_topdir, REPO_PATH))
             success("RPMS created and copied to local repo")
 
-            # Remove src package and create the repo
-            if os.path.exists(os.path.join(REPO_PATH, "SRPMS")):
-                    os.system("rm -rf %s/SRPMS" % REPO_PATH)
             msg("Creating Local RPM Repository")
-            os.system("cd %s && createrepo ." % REPO_PATH) 
+            os.system("cd %s/RPMS && createrepo ." % REPO_PATH) 
             success("Creating Local RPM Repository")
         else:
             warn("Using already built RPMS, use -c flag for cleaning if needed")
 
         # Building ANSOS now
-        
+        os.environ['RELEASE'] = commands.getoutput("cd %s/Archipel && git rev-parse --short HEAD" % CACHE_PATH)
         msg("Building the live CD")
         os.system("cd %s/ANSOS-NG/recipe/ && aclocal && automake --add-missin && autoconf && ./configure --with-image-minimizer && make archipel-node-image.iso" % CACHE_PATH)
