@@ -40,6 +40,18 @@ if pgrep -xl nscd; then
     die "Please stop nscd first"
 fi
 
+echo "# package needed by archipel, archipel RPMS will be added automaticaly" > archipel-pkgs.ks
+
+# parsing our local repo and append package to archipel-pkgs.ks
+find ${ANSOS_LOCAL_REPO#*file://} -iname *.rpm -exec rpm -qp --qf "%{NAME}\n" {} \; >> archipel-pkgs.ks
+
+# adding any extra packages
+if [ -n "$ANSOS_EXTRA_PKGS" ]; then
+  for pkg in $ANSOS_EXTRA_PKGS; do
+    echo $pkg >> archipel-pkgs.ks
+  done
+fi
+
 rm -f "$ANSOS_KS" "$ANSOS_KS.tmp"
 # combine recipe includes
 ksflatten --config "$RECIPE" --output "$ANSOS_KS.tmp"
@@ -51,20 +63,10 @@ if [ -n "$ANSOS_LOCAL_REPO" ]; then
     echo "repo --name=local --baseurl=$ANSOS_LOCAL_REPO" >> "$ANSOS_KS"
 fi
 
-# parsing our local repo and append package to archipel-pkgs.ks
-find ${ANSOS_LOCAL_REPO#*file://} -iname *.rpm -exec rpm -qp --qf "%{NAME}\n" {} \; >> "$ANSOS_KS"
-
 # adding any extra repo
 if [ -n "$ANSOS_EXTRA_REPO" ]; then
   for repo in $ANSOS_EXTRA_REPO; do
     echo "repo --name=local --baseurl=$repo" >> "$ANSOS_KS"
-  done
-fi
-
-# adding any extra packages
-if [ -n "$ANSOS_EXTRA_PKGS" ]; then
-  for pkg in $ANSOS_EXTRA_PKGS; do
-    echo "pkg" >> "$ANSOS_KS"
   done
 fi
 
