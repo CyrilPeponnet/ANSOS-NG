@@ -14,6 +14,10 @@ rootfiles
 dhclient
 openssh-clients
 openssh-server
+ntpd
+ntpdate
+snmpd
+tuned
 qemu-kvm
 libmlx4
 selinux-policy-targeted

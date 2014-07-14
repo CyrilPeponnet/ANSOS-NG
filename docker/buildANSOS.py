@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#!/usr/bin/python
 #
 # buildANSOS
 #
@@ -117,13 +117,22 @@ if __name__ == "__main__":
                         nargs="*",
                         metavar=("pkg1", "pkg2"),
                         help="Add extra packages to install")
-
+    parser.add_argument("-P", "--prefix",
+                        dest="prefix",
+                        metavar="PATH",
+                        help="use prefix as default PATH instead of current dir")
 
     options = parser.parse_args()
 
     if not options.build and not options.clean:
         parser.print_help()
         exit(0)
+
+    if options.prefix:
+        msg("Use %s as buildir" % options.prefix)
+        PATH = options.prefix
+        REPO_PATH = os.path.join(PATH, "REPO")
+        CACHE_PATH = os.path.join(PATH, "CACHE")
 
     if not os.path.exists(CACHE_PATH):
         os.makedirs(CACHE_PATH)
@@ -159,6 +168,8 @@ if __name__ == "__main__":
             # Building Archipel
             clone_repo(options.with_archipel)
             msg("Create Archipel RPMS")
+            #warn("Disable hardlinking in setuptools due to a bug")
+            #os.system("find %s/Archipel/ArchipelAgent -iname setup.py -exec sed -i '1iimport os\\ndel os.link' {} \;" % CACHE_PATH)
             os.system("cd %s/Archipel/ArchipelAgent && ./buildAgent -Be %s" % (CACHE_PATH, REPO_PATH))
             success("RPMS created")
 
@@ -175,9 +186,6 @@ if __name__ == "__main__":
                 else:
                     os.system("cd %s/openvswitch-%s && rpmbuild -bb --without check rhel/openvswitch.spec" % (CACHE_PATH ,options.with_ovs))
                     os.system("cd %s/openvswitch-%s && rpmbuild -bb rhel/openvswitch-kmod-rhel6.spec" % (CACHE_PATH ,options.with_ovs))
-            clone_repo(options.ansos)
-            msg("Building Image minimizer RPM")
-            os.system("cp %s/ANSOS-NG/tools/image-minimizer %s/SOURCES && rpmbuild -bb %s/ANSOS-NG/tools/image-minimizer.spec" % (CACHE_PATH, rpm_topdir, CACHE_PATH))
 
             if not os.path.exists(os.path.join(REPO_PATH, "RPMS/x86_64")):
                 os.makedirs(os.path.join(REPO_PATH, "RPMS/x86_64"))    
@@ -193,4 +201,5 @@ if __name__ == "__main__":
         # Building ANSOS now
         os.environ['RELEASE'] = commands.getoutput("cd %s/Archipel && git rev-parse --short HEAD" % CACHE_PATH)
         msg("Building the live CD")
+        clone_repo(options.ansos)
         os.system("cd %s/ANSOS-NG/recipe/ && aclocal && automake --add-missin && autoconf && ./configure --with-image-minimizer && make archipel-node-image.iso" % CACHE_PATH)

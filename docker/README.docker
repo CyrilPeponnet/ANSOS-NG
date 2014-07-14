@@ -11,11 +11,12 @@ will rnu into weird problems related to e.g. SELinux.
 How to start
 ------------
 
-This has been tested on Fedora 20 and centos 6.
+This has been tested on centos 6.
 
-Install docker
+Install docker, you need at leat 1.0.1
 
     $ sudo yum install -y docker-io
+    $ wget https://get.docker.io/builds/Linux/x86_64/docker-latest -O $(type -P docker)
 
 Start docker (and check that it's running)
 
@@ -25,4 +26,8 @@ Start docker (and check that it's running)
 Build ANSOS Node in docker
 --------------------------
 
-    $ sudo docker build - < Dockerfile-f20
+    $ sudo docker build -t $DIST_ansos_build - < Dockerfile-$DIST
+
+This will create a base container for build named $DIST_ansos_build. You can now run this container to build ansos (priviledged mode is needed for loopback usage in livecd creation process)
+	
+	$sudo docker run --privileged -v `pwd`:/ansos -t -i $DIST_ansos_build

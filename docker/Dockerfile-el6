@@ -1,11 +1,12 @@
-FROM centos:latest
+FROM centos:centos6
 VOLUME ["/ansos"]
+RUN rpm -Uvh http://mirrors.rit.edu/fedora/epel/6/x86_64/epel-release-6-8.noarch.rpm
+RUN sed -i '/^\[centosplus\]$/,/^\[/ s/^enabled=0$/enabled=1/' /etc/yum.repos.d/CentOS-Base.repo
 RUN yum -y install install livecd-tools appliance-tools-minimizer
 RUN yum -y install fedora-packager python-devel rpm-build createrepo
 RUN yum -y install selinux-policy-doc checkpolicy selinux-policy-devel
 RUN yum -y install autoconf automake python-mock python-lockfile openssl-devel
 RUN yum -y groupinstall "Development Tools"
+RUN yum -y install python-setuptools sudo
 
-ADD ./buildansos.py /buildansos.py
-ENTRYPOINT ["./buildansos.py"]
-CMD ["master"]
+ENTRYPOINT python /ansos/buildANSOS.py -BcA https://github.com/CyrilPeponnet/Archipel.git agent-fixes -o 2.1.2 -P /dockercache
