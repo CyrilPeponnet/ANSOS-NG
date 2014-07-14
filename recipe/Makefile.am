@@ -33,7 +33,7 @@ CUR_RAWHIDE       = 21
 CUR_DEVEL         = 21
 
 CENTOS_MIRROR     = http://mirrorlist.centos.org/
-CENTOS_RELEASE    = 6
+CENTOS_RELEASE    = $(shell rpm --eval '%{centos}' |sed 's/[^0-9]//g')
 
 $(PACKAGE).ks: repos.ks version.ks
 
