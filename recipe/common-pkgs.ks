@@ -16,7 +16,7 @@ openssh-clients
 openssh-server
 ntpd
 ntpdate
-snmpd
+net-snmp
 tuned
 qemu-kvm
 libmlx4
