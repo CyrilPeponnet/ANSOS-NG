@@ -14,7 +14,7 @@ rootfiles
 dhclient
 openssh-clients
 openssh-server
-ntpd
+ntp
 ntpdate
 net-snmp
 tuned
