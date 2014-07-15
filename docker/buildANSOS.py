@@ -168,9 +168,11 @@ if __name__ == "__main__":
             # Building Archipel
             clone_repo(options.with_archipel)
             msg("Create Archipel RPMS")
-            #warn("Disable hardlinking in setuptools due to a bug")
-            #os.system("find %s/Archipel/ArchipelAgent -iname setup.py -exec sed -i '1iimport os\\ndel os.link' {} \;" % CACHE_PATH)
             os.system("cd %s/Archipel/ArchipelAgent && ./buildAgent -Be %s" % (CACHE_PATH, REPO_PATH))
+            # Building an python-xmpppy RPM from sources to avoid issue with ssl
+            msg("Building python-xmpppy RPM from git as it fixes issue with ssl")
+            os.system("cd %s && git clone https://github.com/normanr/xmpppy.git" % CACHE_PATH)
+            os.system("cd %s/xmpppy && python setup.py bdist_rpm && cp -f dist/*.noarch.rpm %s/RPMS/noarch/" % (CACHE_PATH, REPO_PATH))
             success("RPMS created")
 
             # Building OVS if needed
