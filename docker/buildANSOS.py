@@ -172,6 +172,7 @@ if __name__ == "__main__":
             # Building an python-xmpppy RPM from sources to avoid issue with ssl
             msg("Building python-xmpppy RPM from git as it fixes issue with ssl")
             os.system("cd %s && git clone https://github.com/normanr/xmpppy.git" % CACHE_PATH)
+            os.system("sed -i \"s/name='xmpppy'/name='python-xmpp'/\" %s/xmpppy/setup.py" % CACHE_PATH)
             os.system("cd %s/xmpppy && python setup.py bdist_rpm && cp -f dist/*.noarch.rpm %s/RPMS/noarch/" % (CACHE_PATH, REPO_PATH))
             success("RPMS created")
 
