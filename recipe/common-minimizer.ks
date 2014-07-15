@@ -9,7 +9,6 @@ drop /usr/share/selinux
 droprpm selinux-policy-devel
 
 droprpm gamin
-droprpm pm-utils
 droprpm usermode
 droprpm vbetool
 droprpm ConsoleKit

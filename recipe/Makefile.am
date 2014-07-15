@@ -81,7 +81,6 @@ version.ks:
 $(PACKAGE).$(PKG_FMT) node: version.ks repos.ks
 	rm -f $(PACKAGE_NAME).iso
 	$(ANSOS_CREATOR) $(RECIPE)
-	mv $(PACKAGE_NAME).iso $(PACKAGE_NAME)-$(VERSION)-$(RELEASE).iso
-	ln -snf $(PACKAGE_NAME)-$(VERSION)-$(RELEASE).iso $(PACKAGE_NAME).iso
+	mv $(PACKAGE_NAME).iso $(PACKAGE_NAME)-$(DISTRO)-$(VERSION)-$(RELEASE).iso
 
 .PHONY: repos.ks version.ks $(PACKAGE).ks

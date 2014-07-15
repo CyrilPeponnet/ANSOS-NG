@@ -23,6 +23,7 @@ libmlx4
 selinux-policy-targeted
 vim-minimal
 sudo
+pm-utils
 python
 python-gudev
 python-libs

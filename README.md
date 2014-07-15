@@ -9,9 +9,11 @@ Because ovirt node isn't really handy to configure for Archipel and because thei
 ### Requirements
 yum install install livecd-tools appliance-tools-minimizer fedora-packager python-devel rpm-build createrepo selinux-policy-doc checkpolicy selinux-policy-devel autoconf automake python-mock python-lockfile
 
+For centos7 you can find the livecd-tools here: http://people.centos.org/arrfab/CentOS7/LiveMedia/RPMS/
+
 ### How to use
 
-Install a centos6 build machine (you can use vagrant !), 
+Install a build machine (you can use vagrant !), tested on centos6 and centos7, install all required dependencies, and run 
 
 ```bash
 wget https://raw.githubusercontent.com/CyrilPeponnet/ANSOS-NG/master/docker/buildANSOS.py
