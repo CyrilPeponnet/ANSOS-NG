@@ -9,6 +9,10 @@ Because ovirt node isn't really handy to configure for Archipel and because thei
 ### Requirements
 yum install install livecd-tools appliance-tools-minimizer fedora-packager python-devel rpm-build createrepo selinux-policy-doc checkpolicy selinux-policy-devel autoconf automake python-mock python-lockfile
 
+If you want to build ovs, you need to add
+
+yum install gcc make openssl-devel kernel-devel graphviz kernel-debug-devel automake redhat-rpm-config libtool
+
 For centos7 you can find the livecd-tools here: http://people.centos.org/arrfab/CentOS7/LiveMedia/RPMS/
 
 ### How to use

@@ -22,6 +22,11 @@ qemu-kvm
 libmlx4
 selinux-policy-targeted
 vim-minimal
+NetworkManager
+NetworkManager-config-server
+NetworkManager-glib
+NetworkManager-libreswan
+NetworkManager-tui
 sudo
 pm-utils
 python

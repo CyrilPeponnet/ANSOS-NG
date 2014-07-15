@@ -78,6 +78,8 @@ keep /lib/modules/*/kernel/net/rds
 keep /lib/modules/*/kernel/net/sctp
 keep /lib/modules/*/kernel/net/sched
 keep /lib/modules/*/kernel/net/sunrpc
+keep /lib/modules/*/kernel/net/openvswitch
+
 #*802    atm        can   ieee802154 *key      *netfilter  rfkill *sunrpc  xfrm
 #*8021q  bluetooth *core *ipv4       *llc       phonet     sched   wimax
 # 9p    *bridge     dccp *ipv6        mac80211 *rds       *sctp    wireless

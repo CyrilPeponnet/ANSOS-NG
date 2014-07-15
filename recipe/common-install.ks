@@ -6,5 +6,3 @@ selinux --enforcing
 firewall --disabled
 
 part / --fstype ext4 --size 5124
-
-network --bootproto=dhcp
