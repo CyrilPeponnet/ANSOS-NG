@@ -85,10 +85,10 @@ def clone_repo(info_repo):
     msg("Cloning %s..." % URL)
     os.system("git clone %s && cd %s && git fetch && git checkout %s" % (URL, URL.split("/")[-1].split(".git")[0], version))
 
-def run(cmd):
+def run(cmd,exit_on_error=True):
     running(cmd)
     if os.system(cmd):
-        error("Wrong return code for %s" % cmd)
+        error("Wrong return code for %s" % cmd, exit_on_error)
 
 ### Main function
 
@@ -219,7 +219,7 @@ if __name__ == "__main__":
 
             if not os.path.exists(os.path.join(REPO_PATH, "RPMS/x86_64")):
                 os.makedirs(os.path.join(REPO_PATH, "RPMS/x86_64"))    
-            run("cp %s/RPMS/x86_64/* %s/RPMS/x86_64/" % (rpm_topdir, REPO_PATH))
+            run("cp %s/RPMS/x86_64/* %s/RPMS/x86_64/" % (rpm_topdir, REPO_PATH), False)
             success("RPMS created and copied to local repo")
 
             msg("Creating Local RPM Repository")

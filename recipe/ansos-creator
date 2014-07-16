@@ -66,7 +66,7 @@ fi
 # adding any extra repo
 if [ -n "$ANSOS_EXTRA_REPO" ]; then
   for repo in $ANSOS_EXTRA_REPO; do
-    echo "repo --name=local --baseurl=$repo" >> "$ANSOS_KS"
+    echo "repo --name=extra-`uuidgen` --baseurl=$repo" >> "$ANSOS_KS"
   done
 fi
 
