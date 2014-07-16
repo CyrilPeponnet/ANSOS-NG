@@ -29,77 +29,77 @@ cat > /etc/rc.d/init.d/livesys << EOF
 # parsing the args passed to the kernel
 
 for i in \`cat /proc/cmdline\`; do
-    case $i in
+    case \$i in
         ip=*)
-            ip=${i#ip=}
+            ip=\${i#ip=}
             ;;
         netmask=*)
-            netmask=${i#netmask=}
+            netmask=\${i#netmask=}
             ;;
         gateway=*)
-            gateway=${i#gateway=}
+            gateway=\${i#gateway=}
             ;;
         dns=*)
-            dns=${i#dns=}
+            dns=\${i#dns=}
             ;;
         hostname=*)
-            hostname=${i#hostname=}
+            hostname=\${i#hostname=}
             ;;
         BOOTIF=*)
-            BOOTIF=${i#BOOTIF=}
+            BOOTIF=\${i#BOOTIF=}
             ;;
         ssh_pwauth=*)
-            ssh_pwauth=${i#ssh_pwauth=}
+            ssh_pwauth=\${i#ssh_pwauth=}
             ;;
     esac
 done
 
-[ ! -n "$hostname" ] && hostname="archipel.node.local"
+[ ! -n "\$hostname" ] && hostname="archipel.node.local"
 
 # set hostname
 
-hostname "$hostname"
+hostname "\$hostname"
 
 # add static hostname to work around xauth bug
-echo "$hostname" > /etc/hostname
+echo "\$hostname" > /etc/hostname
 
 # retrieve the network interface from mac
-if [ -n "$BOOTIF" ]; then
-	nif=\`ip -o l | grep -i $PXE_MAC | cut -d":" -f2\`
+if [ -n "\$BOOTIF" ]; then
+	nif=\`ip -o l | grep -i \$BOOTIF | cut -d":" -f2\`
 else
 	# find the first device we found in biodevname
-	nif=\`/sbin/biosdevname -d | awk 'FNR == 2 {print $3}'\`
+	nif=\`/sbin/biosdevname -d | awk 'FNR == 2 {print \$3}'\`
 fi
 
 # set hostname in /etc/hosts if ip exist and <> dhcp
-if [ [ -n "$ip" ] && [ "$ip" != "dhcp"] ]; then
-	if ! grep $hostname /etc/hosts ; then
-	    echo "$ip $hostname \`hostname -s\`" >> /etc/hosts
+if [ [ -n "\$ip" ] && [ "\$ip" != "dhcp"] ]; then
+	if ! grep \$hostname /etc/hosts ; then
+	    echo "\$ip \$hostname \`hostname -s\`" >> /etc/hosts
 	fi
 	# configure network
-cat > /etc/sysconfig/network-scripts/ifcfg-$nif << EFO
-DEVICE=$nif
+cat > /etc/sysconfig/network-scripts/ifcfg-\$nif << EFO
+DEVICE=\$nif
 BOOTPROTO=None
-DNS1=$dns
-GATEWAY=$gateway
-IPADDR=$ip
-NETMASK=$netmask
+DNS1=\$dns
+GATEWAY=\$gateway
+IPADDR=\$ip
+NETMASK=\$netmask
 ONBOOT=yes
 NM_CONTROLLED=yes
 EFO
 else 
-cat > /etc/sysconfig/network-scripts/ifcfg-$nif << EFO
-DEVICE=$nif
+cat > /etc/sysconfig/network-scripts/ifcfg-\$nif << EFO
+DEVICE=\$nif
 BOOTPROTO=dhcp
 ONBOOT=yes
 NM_CONTROLLED=yes
 EFO
 fi
 
-ifup $nif
+ifup \$nif
 
 # enable or disable ssh pwauth (default is enable)
-if [ -n "$ssh_pwauth" && [ "$ssh_pwauth" == "no"] ]; then
+if [ -n "\$ssh_pwauth" && [ "\$ssh_pwauth" == "no"] ]; then
 sed -i 's/PasswordAuthentication.*/PasswordAuthentication no/g' /etc/ssh/sshd_config 
 systemctl restart sshd
 fi
