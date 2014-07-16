@@ -15,6 +15,7 @@
 
 %post
 %include common-post.ks
+%include @DISTRO@-post.ks
 %include archipel-post.ks
 %end
 
