@@ -1,6 +1,7 @@
 # Archipel Node image recipe
 
 %include common-install.ks
+%include @DISTRO@-install.ks
 %include archipel-install.ks
 
 %include repos.ks

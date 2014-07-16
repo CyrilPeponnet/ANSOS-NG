@@ -33,7 +33,6 @@ An attempt to use docker in order to build images can be found in docker folder.
 
 Check the REAME.md file for more information
 
-
 ### Notes
 
 If livecd-creator complain about unresolved depencies for /bin/python, just change the order of /usr/bin in PATH env var to be before /bin. (centos7)
