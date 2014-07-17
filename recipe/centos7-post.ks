@@ -49,10 +49,10 @@ for i in \`cat /proc/cmdline\`; do
             BOOTIF=\${i#BOOTIF=}
             ;;
         no_ssh_pwauth)
-            no_ssh_pwauth= "True"
+            no_ssh_pwauth="True"
             ;;
         use_node_config)
-			use_node_config = "True"
+			use_node_config="True"
 			;;
     esac
 done
