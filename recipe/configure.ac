@@ -19,7 +19,7 @@ AC_PREREQ(2.60)
 
 define([VERSION_MAJOR], [1])
 define([VERSION_MINOR], [0])
-define([VERSION_NUMBER], VERSION_MAJOR[.]VERSION_MINOR[.])
+define([VERSION_NUMBER], VERSION_MAJOR[.]VERSION_MINOR)
 
 AC_INIT([archipel-ansos], VERSION_NUMBER[], [primalmotion@archipelproject.org])
 
