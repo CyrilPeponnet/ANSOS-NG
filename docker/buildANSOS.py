@@ -88,7 +88,11 @@ def clone_repo(info_repo):
 def run(cmd,exit_on_error=True):
     running(cmd)
     if os.system(cmd):
-        error("Wrong return code for %s" % cmd, exit_on_error)
+        if exit_on_error:
+            error("Wrong return code for %s" % cmd)
+        else:
+            warn("Wrong return code for %s" % cmd)
+
 
 ### Main function
 

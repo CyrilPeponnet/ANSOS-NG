@@ -57,7 +57,6 @@ done
 [ ! -n "\$hostname" ] && hostname="archipel.node.local"
 
 # set hostname
-
 hostname "\$hostname"
 
 # add static hostname to work around xauth bug
@@ -129,9 +128,7 @@ systemctl --no-reload disable crond.service 2> /dev/null || :
 systemctl --no-reload disable atd.service 2> /dev/null || :
 systemctl stop crond.service 2> /dev/null || :
 systemctl stop atd.service 2> /dev/null || :
-
 EOF
-
 
 chmod 755 /etc/rc.d/init.d/livesys
 /sbin/restorecon /etc/rc.d/init.d/livesys
@@ -140,6 +137,8 @@ chmod 755 /etc/rc.d/init.d/livesys
 # enable tmpfs for /tmp
 systemctl enable tmp.mount
 
+# enable openvswitch
+systemctl enable openvswitch 
 
 # save a little bit of space at least...
 rm -f /boot/initramfs*
