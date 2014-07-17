@@ -72,7 +72,7 @@ else
 fi
 
 # set hostname in /etc/hosts if ip exist and <> dhcp
-if [ [ -n "\$ip" ] && [ "\$ip" != "dhcp"] ]; then
+if [ -n "\$ip" ] && [ "\$ip" != "dhcp"]; then
 	if ! grep \$hostname /etc/hosts ; then
 	    echo "\$ip \$hostname \`hostname -s\`" >> /etc/hosts
 	fi
@@ -99,7 +99,7 @@ fi
 ifup \$nif
 
 # enable or disable ssh pwauth (default is enable)
-if [ -n "\$ssh_pwauth" && [ "\$ssh_pwauth" == "no"] ]; then
+if [ -n "\$ssh_pwauth" ] && [ "\$ssh_pwauth" == "no"]; then
 sed -i 's/PasswordAuthentication.*/PasswordAuthentication no/g' /etc/ssh/sshd_config 
 systemctl restart sshd
 fi
