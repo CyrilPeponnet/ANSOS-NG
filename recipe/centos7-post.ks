@@ -13,7 +13,7 @@ sed -i '/rm -f \/etc\/yp.conf/d' $DHSCRIPT
 
 # FIXME: it'd be better to get this installed from a package
 
-cat > /etc/rc.d/init.d/livesys << EOF
+cat > /etc/rc.d/init.d/node-config << EOF
 #!/bin/bash
 #
 # live: Init script for live image
@@ -48,60 +48,15 @@ for i in \`cat /proc/cmdline\`; do
         BOOTIF=*)
             BOOTIF=\${i#BOOTIF=}
             ;;
-        ssh_pwauth=*)
-            ssh_pwauth=\${i#ssh_pwauth=}
+        no_ssh_pwauth)
+            no_ssh_pwauth= "True"
             ;;
+        use_node_config)
+			use_node_config = "True"
+			;;
     esac
 done
 
-[ ! -n "\$hostname" ] && hostname="archipel.node.local"
-
-# set hostname
-hostname "\$hostname"
-
-# add static hostname to work around xauth bug
-echo "\$hostname" > /etc/hostname
-
-# retrieve the network interface from mac
-if [ -n "\$BOOTIF" ]; then
-	nif=\`ip -o l | grep -i \$BOOTIF | cut -d":" -f2\`
-else
-	# find the first device we found in biodevname
-	nif=\`/sbin/biosdevname -d | awk 'FNR == 2 {print \$3}'\`
-fi
-
-# set hostname in /etc/hosts if ip exist and <> dhcp
-if [ -n "\$ip" ] && [ "\$ip" != "dhcp"]; then
-	if ! grep \$hostname /etc/hosts ; then
-	    echo "\$ip \$hostname \`hostname -s\`" >> /etc/hosts
-	fi
-	# configure network
-cat > /etc/sysconfig/network-scripts/ifcfg-\$nif << EFO
-DEVICE=\$nif
-BOOTPROTO=None
-DNS1=\$dns
-GATEWAY=\$gateway
-IPADDR=\$ip
-NETMASK=\$netmask
-ONBOOT=yes
-NM_CONTROLLED=yes
-EFO
-else 
-cat > /etc/sysconfig/network-scripts/ifcfg-\$nif << EFO
-DEVICE=\$nif
-BOOTPROTO=dhcp
-ONBOOT=yes
-NM_CONTROLLED=yes
-EFO
-fi
-
-ifup \$nif
-
-# enable or disable ssh pwauth (default is enable)
-if [ -n "\$ssh_pwauth" ] && [ "\$ssh_pwauth" == "no"]; then
-sed -i 's/PasswordAuthentication.*/PasswordAuthentication no/g' /etc/ssh/sshd_config 
-systemctl restart sshd
-fi
 
 # Make sure we don't mangle the hardware clock on shutdown
 ln -sf /dev/null /etc/systemd/system/hwclock-save.service
@@ -128,11 +83,66 @@ systemctl --no-reload disable crond.service 2> /dev/null || :
 systemctl --no-reload disable atd.service 2> /dev/null || :
 systemctl stop crond.service 2> /dev/null || :
 systemctl stop atd.service 2> /dev/null || :
+
+if [ -n "\$use_node_config" ]; then
+
+[ ! -n "\$hostname" ] && hostname="archipel.node.local"
+
+# set hostname
+hostname "\$hostname"
+
+# add static hostname to work around xauth bug
+echo "\$hostname" > /etc/hostname
+
+# retrieve the network interface from mac
+if [ -n "\$BOOTIF" ]; then
+	nif=\`ip -o l | grep -i \$BOOTIF | cut -d":" -f2 | tr -d " "\`
+else
+	# find the first device we found in biodevname
+	nif=\`/sbin/biosdevname -d | awk 'FNR == 2 {print \$3}' | tr -d " "\`
+fi
+
+# set hostname in /etc/hosts if ip exist and <> dhcp
+if [ -n "\$ip" ] && [ "\$ip" != "dhcp" ]; then
+	if ! grep \$hostname /etc/hosts ; then
+	    echo "\$ip \$hostname \`hostname -s\`" >> /etc/hosts
+	fi
+	# configure network
+cat > /etc/sysconfig/network-scripts/ifcfg-\$nif << EFO
+DEVICE=\$nif
+BOOTPROTO=None
+DNS1=\$dns
+GATEWAY=\$gateway
+IPADDR=\$ip
+NETMASK=\$netmask
+ONBOOT=yes
+NM_CONTROLLED=yes
+EFO
+else 
+cat > /etc/sysconfig/network-scripts/ifcfg-\$nif << EFO
+DEVICE=\$nif
+BOOTPROTO=dhcp
+ONBOOT=yes
+NM_CONTROLLED=yes
+EFO
+fi
+
+ifdown \$nif
+ifup \$nif
+
+fi
+
+# enable or disable ssh pwauth (default is enable)
+if [ -n "\$no_ssh_pwauth" ]; then
+sed -i 's/PasswordAuthentication.*/PasswordAuthentication no/g' /etc/ssh/sshd_config 
+systemctl restart sshd
+fi
+
 EOF
 
-chmod 755 /etc/rc.d/init.d/livesys
-/sbin/restorecon /etc/rc.d/init.d/livesys
-/sbin/chkconfig --add livesys
+chmod 755 /etc/rc.d/init.d/node-config
+/sbin/restorecon /etc/rc.d/init.d/node-config
+/sbin/chkconfig --add node-config
 
 # enable tmpfs for /tmp
 systemctl enable tmp.mount

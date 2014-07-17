@@ -36,3 +36,10 @@ Check the REAME.md file for more information
 ### Notes
 
 If livecd-creator complain about unresolved depencies for /bin/python, just change the order of /usr/bin in PATH env var to be before /bin. (centos7)
+
+Centos7:
+By default centos will not configure the network interfaces, you have two choices:
+ * You can set kernel options used by dracut (see dracut boot options) in order to define your ip/hostname | other
+ * You can use the built-in node-config daemon to do it in an old way: `use_node_config BOOTIF=[MAC|ifname] ip=[IP|dhcp] netmask=IP dns=IP gw=IP`
+
+ If you want to disable ssh Password Authentication (only use keys) you can add `no_ssh_pwauth` too. 
