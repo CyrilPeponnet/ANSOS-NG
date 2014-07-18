@@ -54,6 +54,9 @@ cat > /etc/sysconfig/ip6tables << \EOF
 COMMIT
 EOF
 
+# Enable archipel daemon
+systemctl enable archipel-agent
+
 # Archipel
 echo "[ARCHIPEL] Reactivating the root account"
 passwd -uf root
