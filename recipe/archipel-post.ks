@@ -19,11 +19,11 @@ cat > /etc/sysconfig/iptables << \EOF
 # snmp
 -A INPUT -p udp --dport 161 -j ACCEPT
 #
--A INPUT -j REJECT --reject-with icmp-host-prohibited
--A FORWARD -m physdev ! --physdev-is-bridged -j REJECT --reject-with icmp-host-prohibited
 # archipel
 -A INPUT -p tcp --dport 5222 -j ACCEPT
 -A INPUT -p tcp --dport 6900:6999 -j ACCEPT
+-A INPUT -j REJECT --reject-with icmp-host-prohibited
+-A FORWARD -m physdev ! --physdev-is-bridged -j REJECT --reject-with icmp-host-prohibited
 COMMIT
 EOF
 # configure IPv6 firewall, default is all ACCEPT
@@ -46,11 +46,11 @@ cat > /etc/sysconfig/ip6tables << \EOF
 -A INPUT -p udp --dport 161 -j ACCEPT
 # unblock ipv6 dhcp response
 -A INPUT -p udp --dport 546 -j ACCEPT
--A INPUT -j REJECT --reject-with icmp6-adm-prohibited
--A FORWARD -m physdev ! --physdev-is-bridged -j REJECT --reject-with icmp6-adm-prohibited
 # archipel
 -A INPUT -p tcp --dport 5222 -j ACCEPT
 -A INPUT -p tcp --dport 6900:6999 -j ACCEPT
+-A INPUT -j REJECT --reject-with icmp6-adm-prohibited
+-A FORWARD -m physdev ! --physdev-is-bridged -j REJECT --reject-with icmp6-adm-prohibited
 COMMIT
 EOF
 
