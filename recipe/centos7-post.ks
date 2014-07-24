@@ -140,6 +140,9 @@ fi
 
 EOF
 
+# enable nested virt
+echo "options kvm-intel nested=1" > /etc/modprobe.d/kvm-intel.conf
+
 chmod 755 /etc/rc.d/init.d/node-config
 /sbin/restorecon /etc/rc.d/init.d/node-config
 /sbin/chkconfig --add node-config
