@@ -192,6 +192,7 @@ if __name__ == "__main__":
             # Building Archipel
             clone_repo(options.with_archipel)
             msg("Create Archipel RPMS")
+            run("cd %s/Archipel/ && ./pull.sh" % (CACHE_PATH))
             run("cd %s/Archipel/ArchipelAgent && ./buildAgent -Be %s" % (CACHE_PATH, REPO_PATH))
 
             # Building OVS if needed
