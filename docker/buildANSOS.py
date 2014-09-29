@@ -128,7 +128,7 @@ if __name__ == "__main__":
                         const="2.1.2")
     parser.add_argument("-k", "--kmod",
                         dest="kmod",
-                        help="Build OpenVswitch kernel module (default %(default)s",
+                        help="Build OpenVswitch kernel module (default %(default)s)",
                         action="store_true",
                         default=False)
     parser.add_argument("-e", "--extra-repos",
@@ -166,12 +166,12 @@ if __name__ == "__main__":
             run("rm -rf %s/*" % CACHE_PATH)
 
     if not os.path.exists(REPO_PATH):
-        os.makedirs(REPO_PATH)    
+        os.makedirs(REPO_PATH)
     else:
         if options.clean:
             msg("Cleaning %s" % REPO_PATH)
             run("rm -rf %s/*" % REPO_PATH)
-    
+
     if options.build:
 
         # environment variables
@@ -192,14 +192,7 @@ if __name__ == "__main__":
             # Building Archipel
             clone_repo(options.with_archipel)
             msg("Create Archipel RPMS")
-            msg("Patching python-xmpp dependency because we want to build our own package")
-            run("cd %s/Archipel/ArchipelAgent && sed -i 's/python-xmpp,/xmpppy,/g' archipel-core/setup.py" % CACHE_PATH)
             run("cd %s/Archipel/ArchipelAgent && ./buildAgent -Be %s" % (CACHE_PATH, REPO_PATH))
-            # Building an python-xmpppy RPM from sources to avoid issue with ssl
-            msg("Building xmpppy RPM from git as it fixes issue with ssl")
-            run("cd %s && git clone https://github.com/normanr/xmpppy.git" % CACHE_PATH)
-            run("cd %s/xmpppy && python setup.py bdist_rpm && cp -f dist/*.noarch.rpm %s/RPMS/noarch/" % (CACHE_PATH, REPO_PATH))
-            success("RPMS created")
 
             # Building OVS if needed
             if options.with_ovs:
@@ -223,12 +216,12 @@ if __name__ == "__main__":
                         run("cd %s/openvswitch-%s && rpmbuild -bb rhel/openvswitch-kmod-rhel6.spec" % (CACHE_PATH ,options.with_ovs))
 
             if not os.path.exists(os.path.join(REPO_PATH, "RPMS/x86_64")):
-                os.makedirs(os.path.join(REPO_PATH, "RPMS/x86_64"))    
+                os.makedirs(os.path.join(REPO_PATH, "RPMS/x86_64"))
             run("cp %s/RPMS/x86_64/* %s/RPMS/x86_64/" % (rpm_topdir, REPO_PATH), False)
             success("RPMS created and copied to local repo")
 
             msg("Creating Local RPM Repository")
-            run("cd %s/RPMS && createrepo ." % REPO_PATH) 
+            run("cd %s/RPMS && createrepo ." % REPO_PATH)
             success("Creating Local RPM Repository")
         else:
             warn("Using already built RPMS, use -c flag for cleaning if needed")
@@ -237,4 +230,4 @@ if __name__ == "__main__":
         os.environ['RELEASE'] = commands.getoutput("cd %s/Archipel && git rev-parse --short HEAD" % CACHE_PATH)
         msg("Building the live CD")
         clone_repo(options.ansos)
-        run("cd %s/ANSOS-NG/recipe/ && aclocal && automake --add-missin && autoconf && ./configure --with-image-minimizer && make archipel-node-image.iso" % CACHE_PATH)
+        run("cd %s/ANSOS-NG/recipe/ && aclocal && automake --add-missing && autoconf && ./configure --with-image-minimizer && make archipel-node-image.iso" % CACHE_PATH)

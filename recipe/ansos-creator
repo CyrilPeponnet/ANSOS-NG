@@ -42,8 +42,8 @@ fi
 
 echo "# package needed by archipel, archipel RPMS will be added automaticaly" > archipel-pkgs.ks
 
-# parsing our local repo and append package to archipel-pkgs.ks
-find ${ANSOS_LOCAL_REPO#*file://} -iname *.rpm -exec rpm -qp --qf "%{NAME}\n" {} \; >> archipel-pkgs.ks
+# parsing our local repo and append package to archipel-pkgs.ks (set archipel-core as first archipel packages)
+find ${ANSOS_LOCAL_REPO#*file://} -iname *.rpm -exec rpm -qp --qf "%{NAME}\n" {} \; | sort -r >> archipel-pkgs.ks
 
 # adding any extra packages
 if [ -n "$ANSOS_EXTRA_PKGS" ]; then
