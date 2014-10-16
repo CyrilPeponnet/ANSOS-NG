@@ -44,7 +44,7 @@ and appliance-tools-minimizer from epel6:
 yum install http://dl.fedoraproject.org/pub/epel/6/i386/appliance-tools-minimizer-007.7-2.1.el6.noarch.rpm
 ```
 
-Install missing dependencies
+Install missing dependencies:
 
 ```bash
 yum install install wget livecd-tools appliance-tools-minimizer fedora-packager python-devel rpm-build createrepo selinux-policy-doc checkpolicy selinux-policy-devel autoconf automake python-mock python-lockfile
