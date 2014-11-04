@@ -187,7 +187,7 @@ if __name__ == "__main__":
         if options.extra_packages:
             os.environ['ANSOS_EXTRA_PKGS'] = " ".join(options.extra_packages)
         if options.post:
-            os.environ['ANSOS_EXTRA_POST'] = " ".join(options.post)
+            os.environ['ANSOS_EXTRA_POST'] = options.post
         success("Environment variables set")
 
         os.chdir(CACHE_PATH)
