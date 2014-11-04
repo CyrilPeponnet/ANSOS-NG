@@ -52,6 +52,17 @@ if [ -n "$ANSOS_EXTRA_PKGS" ]; then
   done
 fi
 
+# adding extra post
+if [ -n "$ANSOS_EXTRA_POST" ]; then
+  ! [ -f archipel-post.ks.ori ] && cp archipel-post.ks archipel-post.ks.ori
+  if [ -f "$ANSOS_EXTRA_POST" ]; then
+    cat archipel-post.ks.ori "$ANSOS_EXTRA_POST" > archipel-post.ks
+  else
+    cat archipel-post.ks.ori > archipel-post.ks
+    echo "$ANSOS_EXTRA_POST" >> archipel-post.ks
+  fi
+fi
+
 rm -f "$ANSOS_KS" "$ANSOS_KS.tmp"
 # combine recipe includes
 ksflatten --config "$RECIPE" --output "$ANSOS_KS.tmp"

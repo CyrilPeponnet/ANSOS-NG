@@ -145,6 +145,10 @@ if __name__ == "__main__":
                         dest="prefix",
                         metavar="PATH",
                         help="use prefix as default PATH instead of current dir")
+    parser.add_argument("--post",
+                        dest="post",
+                        metavar="commands or file",
+                        help="add commands of file to kickstart post script recipe")
 
     options = parser.parse_args()
 
@@ -182,6 +186,8 @@ if __name__ == "__main__":
             os.environ['ANSOS_EXTRA_REPO'] = " ".join(options.extra_repos)
         if options.extra_packages:
             os.environ['ANSOS_EXTRA_PKGS'] = " ".join(options.extra_packages)
+        if options.post:
+            os.environ['ANSOS_EXTRA_POST'] = " ".join(options.post)
         success("Environment variables set")
 
         os.chdir(CACHE_PATH)
