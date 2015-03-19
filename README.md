@@ -22,7 +22,7 @@ For centos7 you can find the livecd-tools here: http://people.centos.org/arrfab/
 
 Install a build machine (you can use vagrant):
 
-`vagrant init "hfm4/centos7" && vagrant up`
+`vagrant init "vStone/centos-7.x-puppet.3.x" && vagrant up`
 
 Add epel:
 
