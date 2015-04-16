@@ -65,6 +65,9 @@ echo "[ARCHIPEL] Creating the /vm and /stateless folders"
 mkdir -p /vm
 mkdir -p /stateless
 
+echo "[ARCHIPEL] Put /var/cache/libvirt/qemu folder in tmpfs"
+echo "tmpfs      /var/cache/libvirt/qemu	tmpfs	defaults	0 0" >> /etc/fstab
+
 echo "[ARCHIPEL] Updating the archipel config file to be in stateless mode"
 cat > /etc/archipel/archipel.conf <<EOF_archipelconf
 [GLOBAL]
