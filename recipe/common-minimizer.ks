@@ -133,9 +133,6 @@ keep /lib/modules/*/kernel/drivers/i2c
 #*cdrom      *firmware  input       misc     ?power    ?uio
 #*char*      ?gpu       isdn        mmc      ?pps      *usb
 
-drop /usr/share/zoneinfo
-keep /usr/share/zoneinfo/UTC
-
 drop /etc/alsa
 drop /usr/share/alsa
 drop /usr/share/awk
