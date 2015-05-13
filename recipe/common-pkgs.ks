@@ -115,11 +115,6 @@ yum
 # Consistent ethernet device naming
 biosdevname
 fcoe-utils
-#glusterfs client packages
-glusterfs
-glusterfs-devel
-glusterfs-fuse
-glusterfs-rdma
 
 bridge-utils
 squashfs-tools

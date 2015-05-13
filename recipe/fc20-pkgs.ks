@@ -4,8 +4,6 @@
 -fedora-logos
 generic-logos
 
-glusterfs-client
-
 
 # keyboard layout
 system-config-keyboard-base
@@ -37,7 +35,6 @@ net-tools
 vconfig
 bfa-firmware
 grubby
-glusterfs-server
 
 # Explicitly add these package, to prevent yum from pulling in the debug versions
 kernel-modules-extra
