@@ -27,7 +27,7 @@ Install a build machine (you can use vagrant):
 Add epel:
 
 ```bash
-yum install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-2.noarch.rpm
+yum install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
 ```
 
 Install all required dependencies:
@@ -35,7 +35,7 @@ Install all required dependencies:
 For centos7 you need to install livecd-tools from (not yet in EPEL repo):
 
 ```
-yum install http://people.centos.org/arrfab/CentOS7/LiveMedia/RPMS/livecd-tools-20.1-2.el7.x86_64.rpm http://people.centos.org/arrfab/CentOS7/LiveMedia/RPMS/python-imgcreate-20.1-2.el7.x86_64.rpm http://people.centos.org/arrfab/CentOS7/LiveMedia/RPMS/hfsplus-tools-540.1.linux3-4.el7.x86_64.rpm
+yum install http://people.centos.org/arrfab/CentOS7/LiveMedia/RPMS/livecd-tools-20.1-3.el7.x86_64.rpm http://people.centos.org/arrfab/CentOS7/LiveMedia/RPMS/python-imgcreate-20.1-3.el7.x86_64.rpm http://people.centos.org/arrfab/CentOS7/LiveMedia/RPMS/hfsplus-tools-540.1.linux3-4.el7.x86_64.rpm
 ```
 
 and appliance-tools-minimizer from epel6:
