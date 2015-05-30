@@ -14,7 +14,7 @@ yum install install wget livecd-tools appliance-tools-minimizer fedora-packager 
 
 If you want to build ovs, you need to add
 
-yum install gcc make openssl-devel kernel-devel graphviz kernel-debug-devel automake redhat-rpm-config libtool
+yum install gcc make openssl-devel kernel-devel graphviz kernel-debug-devel automake redhat-rpm-config libtool git
 
 For centos7 you can find the livecd-tools here: http://people.centos.org/arrfab/CentOS7/LiveMedia/RPMS/
 
