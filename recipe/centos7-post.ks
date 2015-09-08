@@ -118,7 +118,7 @@ NETMASK=\$netmask
 ONBOOT=yes
 NM_CONTROLLED=yes
 EFO
-else 
+else
 cat > /etc/sysconfig/network-scripts/ifcfg-\$nif << EFO
 DEVICE=\$nif
 BOOTPROTO=dhcp
@@ -134,7 +134,7 @@ fi
 
 # enable or disable ssh pwauth (default is enable)
 if [ -n "\$no_ssh_pwauth" ]; then
-sed -i 's/PasswordAuthentication.*/PasswordAuthentication no/g' /etc/ssh/sshd_config 
+sed -i 's/PasswordAuthentication.*/PasswordAuthentication no/g' /etc/ssh/sshd_config
 systemctl restart sshd
 fi
 
@@ -142,6 +142,7 @@ EOF
 
 # enable nested virt
 echo "options kvm-intel nested=1" > /etc/modprobe.d/kvm-intel.conf
+echo "options kvm-amd nested=1" > /etc/modprobe.d/kvm-amd.conf
 
 chmod 755 /etc/rc.d/init.d/node-config
 /sbin/restorecon /etc/rc.d/init.d/node-config
@@ -151,7 +152,7 @@ chmod 755 /etc/rc.d/init.d/node-config
 systemctl enable tmp.mount
 
 # enable openvswitch
-systemctl enable openvswitch 
+systemctl enable openvswitch
 
 # save a little bit of space at least...
 rm -f /boot/initramfs*
