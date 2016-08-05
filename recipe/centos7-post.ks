@@ -158,4 +158,3 @@ systemctl enable openvswitch
 rm -f /boot/initramfs*
 # make sure there aren't core files lying around
 rm -f /core*
-

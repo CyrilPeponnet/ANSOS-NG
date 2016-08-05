@@ -2,6 +2,12 @@
 # just to get a boot warning to shut up
 touch /etc/resolv.conf
 
+# Disable libvirtd on boot
+systemctl disable libvirtd
+
+# Remove the default virbr0 libvirt network
+rm -rf /etc/libvirt/qemu/networks
+
 # make libvirtd listen on the external interfaces
 sed -i -e 's/^#\(LIBVIRTD_ARGS="--listen"\).*/\1/' \
    /etc/sysconfig/libvirtd
@@ -29,4 +35,3 @@ rm -rf /etc/systemd/system/default.target
 ln -sf /lib/systemd/system/multi-user.target /etc/systemd/system/default.target
 
 echo "-w /etc/shadow -p wa" >> /etc/audit/audit.rules
-
