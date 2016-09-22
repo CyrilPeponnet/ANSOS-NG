@@ -151,6 +151,9 @@ chmod 755 /etc/rc.d/init.d/node-config
 # enable tmpfs for /tmp
 systemctl enable tmp.mount
 
+# enable tmpfs for /var/log
+echo "tmpfs      /var/log	tmpfs	defaults	0 0" >> /etc/fstab
+
 # enable openvswitch
 systemctl enable openvswitch
 
