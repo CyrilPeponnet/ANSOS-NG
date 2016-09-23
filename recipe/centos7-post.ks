@@ -85,7 +85,7 @@ systemctl stop crond.service 2> /dev/null || :
 systemctl stop atd.service 2> /dev/null || :
 
 # bind mount logs dir for common services to tmp
-mkdir -p /tmp/var/log/{glusterfs,openvswitch,libvirt}
+mkdir -p /tmp/var/log/{glusterfs,openvswitch,libvirt,audit}
 mount -B /tmp/var/log/glusterfs /var/log/glusterfs
 mount -B /tmp/var/log/openvswitch /var/log/openvswitch
 mount -B /tmp/var/log/libvirt /var/log/libvirt
