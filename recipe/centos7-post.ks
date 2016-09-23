@@ -21,7 +21,7 @@ cat > /etc/rc.d/init.d/node-config << EOF
 # chkconfig: 345 00 99
 # description: Init script for live image.
 ### BEGIN INIT INFO
-# X-Start-Before: NetworkManager
+# X-Start-Before: Auditd
 ### END INIT INFO
 
 . /etc/init.d/functions
