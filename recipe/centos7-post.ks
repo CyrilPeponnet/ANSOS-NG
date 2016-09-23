@@ -84,6 +84,12 @@ systemctl --no-reload disable atd.service 2> /dev/null || :
 systemctl stop crond.service 2> /dev/null || :
 systemctl stop atd.service 2> /dev/null || :
 
+# bind mount logs dir for common services to tmp
+mkdir -p /tmp/var/log/{glusterfs,openvswitch,libvirtd}
+mount -B /tmp/var/log/glusterfs /var/log/glusterfs
+mount -B /tmp/var/log/openvswitch /var/log/openvswitch
+mount -B /tmp/var/log/libvirt /var/log/libvirt
+
 if [ -n "\$use_node_config" ]; then
 
 [ ! -n "\$hostname" ] && hostname="archipel.node.local"
@@ -151,8 +157,10 @@ chmod 755 /etc/rc.d/init.d/node-config
 # enable tmpfs for /tmp
 systemctl enable tmp.mount
 
-# enable tmpfs for /var/log
-echo "tmpfs      /var/log	tmpfs	defaults	0 0" >> /etc/fstab
+# relocating logs to tmpfs
+sed -i "s#/var#/tmp/var#g" /etc/audit/auditd.conf
+sed -i "s#/var#/tmp/var#g" /etc/rsyslog.conf
+sed -i "s#/var/log#/tmp/var/log#g" /etc/logrotate.d/syslog
 
 # enable openvswitch
 systemctl enable openvswitch
