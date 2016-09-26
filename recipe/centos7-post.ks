@@ -85,7 +85,7 @@ systemctl stop crond.service 2> /dev/null || :
 systemctl stop atd.service 2> /dev/null || :
 
 # bind mount logs dir for common services to tmp
-mkdir -p /tmp/var/log/{glusterfs,openvswitch,libvirt,audit}
+mkdir -p /tmp/var/log/{glusterfs,openvswitch,libvirt}
 mount -B /tmp/var/log/glusterfs /var/log/glusterfs
 mount -B /tmp/var/log/openvswitch /var/log/openvswitch
 mount -B /tmp/var/log/libvirt /var/log/libvirt
@@ -158,7 +158,7 @@ chmod 755 /etc/rc.d/init.d/node-config
 systemctl enable tmp.mount
 
 # relocating logs to tmpfs
-sed -i "s#/var#/tmp/var#g" /etc/audit/auditd.conf
+sed -i "s#/var/log/audit/#/tmp/var/log/#g" /etc/audit/auditd.conf
 sed -i "s#/var#/tmp/var#g" /etc/rsyslog.conf
 sed -i "s#/var/log#/tmp/var/log#g" /etc/logrotate.d/syslog
 
