@@ -158,7 +158,6 @@ chmod 755 /etc/rc.d/init.d/node-config
 systemctl enable tmp.mount
 
 # relocating logs to tmpfs
-sed -i "s#/var/log/audit/#/tmp/#g" /etc/audit/auditd.conf
 sed -i "s#/var#/tmp/var#g" /etc/rsyslog.conf
 sed -i "s#/var/log#/tmp/var/log#g" /etc/logrotate.d/syslog
 
