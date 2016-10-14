@@ -161,6 +161,10 @@ systemctl enable tmp.mount
 sed -i "s#/var#/tmp/var#g" /etc/rsyslog.conf
 sed -i "s#/var/log#/tmp/var/log#g" /etc/logrotate.d/syslog
 
+# Prevent systemd tempfiles.d to clean up the above folder
+
+echo "x /tmp/var/" > /etc/tmpfiles.d/ansos.conf
+
 # enable openvswitch
 systemctl enable openvswitch
 
