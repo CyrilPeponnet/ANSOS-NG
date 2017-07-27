@@ -27,7 +27,7 @@ Install a build machine (you can use vagrant):
 Add epel:
 
 ```bash
-yum install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+yum install http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-10.noarch.rpm
 ```
 
 Install all required dependencies:
