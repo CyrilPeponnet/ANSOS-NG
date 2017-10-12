@@ -57,13 +57,22 @@ Edit `/etc/sysconfig/selinux`, set it to enforcing and reboot.
 And finally run:
 
 ```bash
+# Download the build script
 wget https://raw.githubusercontent.com/CyrilPeponnet/ANSOS-NG/master/docker/buildANSOS.py
+
+# Run the build script with the recommended params from the Archipel Wiki
+python buildANSOS.py -Bc -e
+```
+
+You can customize a lot of things just check with `python buildANSOS.py -h`.
+
+If you want to build ANSOS-NG with OpenVSwitch, run: *(not working at the moment)*
+
+```bash
 python buildANSOS.py -Bc -e https://repos.fedorapeople.org/repos/openstack/openstack-juno/epel-7/ -p openvswitch
 ```
 
 This will build ANSOS-NG iso image based on Archipel git master and openVswitch from RDO repositories.
-
-You can customize a lot of things just check with `python buildANSOS.py -h`.
 
 ### Docker build - beta
 An attempt to use docker in order to build images can be found in docker folder. For now it doesn't work due to:
