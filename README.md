@@ -9,7 +9,7 @@ Because ovirt node isn't really handy to configure for Archipel and because thei
 ### Requirements
 
 ```bash
-yum install install wget livecd-tools appliance-tools-minimizer fedora-packager python-devel rpm-build createrepo selinux-policy-doc checkpolicy selinux-policy-devel autoconf automake python-mock python-lockfile
+yum install install wget livecd-tools appliance-tools-minimizer fedora-packager python-devel rpm-build createrepo selinux-policy-doc checkpolicy selinux-policy-devel autoconf automake python-mock python-lockfile git
 ```
 
 If you want to build ovs, you need to add
